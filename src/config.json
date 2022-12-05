@@ -1,0 +1,147 @@
+[
+  {
+    "name": "Reference Data",
+    "path": "ref-data",
+    "dsn": "/market-data/reference-data",
+    "endpoints": [
+      { "name": "Symbols", "endpoint": "/v3/search" },
+      { "name": "MDC", "endpoint": "/v3/mdc" },
+      { "name": "Forward Curves", "endpoint": "/v3/forward-curve/search" }
+    ],
+
+    "params": {
+      "q": { "display": "Q" },
+      "filter": { "display": "Filter" },
+      "sort": { "display": "Sort" },
+      "page": { "display": "Page" },
+      "pageSize": { "display": "PageSize" }
+    },
+    "useCases": [
+      {
+        "name": "Spot, Crude Symbols",
+        "filter": "commodity: \"Crude Oil\" AND contract_type:\"Spot\"",
+        "endpoint": "Symbols"
+      },
+      {
+        "name": "Symbols Delivered to a Qatar",
+        "filter": "delivery_region: \"Qatar\"",
+        "endpoint": "Symbols",
+        "pageSize": 1000
+      },
+      {
+        "name": "Symbols in the CN003 (Monthly) Curve",
+        "filter": "curve_code: \"CN003\" AND derivative_maturity_frequency: \"Month\"",
+        "sort": "symbol:asc",
+        "endpoint": "Symbols"
+      },
+      {
+        "name": "Brent Curves",
+        "q": "brent",
+        "sort": "curve_name:asc",
+        "endpoint": "Forward Curves"
+      },
+      {
+        "name": "List of MDCs",
+        "endpoint": "MDC"
+      }
+    ]
+  },
+  {
+    "name": "Market Data",
+    "path": "market-data",
+    "dsn": "/market-data",
+    "endpoints": [
+      { "name": "CurrentBySymbol", "endpoint": "/v3/value/current/symbol" },
+      { "name": "CurrentByMDC", "endpoint": "/v3/value/current/mdc" },
+      { "name": "HistoryBySymbol", "endpoint": "/v3/value/history/symbol" },
+      { "name": "HistoryByMDC", "endpoint": "/v3/value/history/mdc" }
+    ],
+    "useCases": [
+      {
+        "name": "Current Prices for list of Symbols",
+        "filter": "symbol IN (\"PCAAS00\", \"PCAAT00\")",
+        "endpoint": "CurrentBySymbol"
+      },
+      {
+        "name": "Historical Prices for list of Symbols",
+        "filter": "symbol IN (\"PCAAS00\", \"PCAAT00\")",
+        "sort": "assessDate:desc",
+        "endpoint": "HistoryBySymbol"
+      },
+      {
+        "name": "Current Price for an MDC",
+        "filter": "mdc: \"ET\"",
+        "endpoint": "CurrentByMDC"
+      }
+    ],
+    "params": {
+      "filter": { "display": "Filter" },
+      "sort": { "display": "Sort" },
+      "page": { "display": "Page" },
+      "pageSize": { "display": "PageSize" }
+    }
+  },
+  {
+    "name": "Forward Curves",
+    "path": "forward-curves",
+    "dsn": "/market-data",
+    "endpoints": [
+      { "name": "Curve Code", "endpoint": "/forward-curve/v3/curve-codes" }
+    ],
+    "useCases": [
+      {
+        "name": "Current Data for a Curve",
+        "filter": "curve_code: \"CN003\"",
+        "endpoint": "Curve Code"
+      },
+      {
+        "name": "One month of data for a Curve",
+        "filter": "curve_code: \"CN003\" AND  assessDate >= \"2022-10-01\" and assessDate <= \"2022-10-31\"",
+        "endpoint": "Curve Code"
+      },
+      {
+        "name": "Current Data for several Curves",
+        "filter": "curve_code IN (\"CN003\", \"CN005\", \"CN006\")",
+        "endpoint": "Curve Code"
+      }
+    ],
+    "params": {
+      "filter": { "display": "Filter" },
+      "sort": { "display": "Sort" },
+      "page": { "display": "Page" },
+      "pageSize": { "display": "PageSize" }
+    }
+  },
+
+  {
+    "name": "eWindow Trade Data",
+    "path": "trades",
+    "dsn": "/tradedata",
+    "endpoints": [{ "name": "Trades", "endpoint": "/v3/ewindowdata" }],
+    "useCases": [
+      {
+        "name": "Filter by Market and Product",
+        "filter": "market IN (\"Asia Japan Rack\",\"ASIA MD (PVO)\") AND product:\"Platts Japan Rack GO 10ppm\"",
+        "sort": "order_date:desc",
+        "endpoint": "Trades"
+      },
+      {
+        "name": "Filter by Product, Order Date, Consummated trades",
+        "filter": "product:\"Platts Gasoline*\" AND order_date>\"2021-01-01\" AND order_state:\"consummated\"",
+        "endpoint": "Trades"
+      },
+      {
+        "name": "Fitler by Market Maker/Counterparty",
+        "filter": "market_maker:\"Hess Corporation\" OR counterparty:\"Hess Corporation\" AND order_date>=\"2022-12-01\" AND order_date<=\"2022-12-31\"",
+        "sort": "order_date:desc",
+        "endpoint": "Trades"
+      }
+    ],
+    "params": {
+      "filter": { "display": "Filter" },
+      "sort": { "display": "Sort" },
+      "page": { "display": "Page" },
+      "pageSize": { "display": "PageSize" }
+    }
+  }
+]

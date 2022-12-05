@@ -1,0 +1,29 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.group {
+  display: flex;
+}
+
+.nav {
+  flex-basis: 40%;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.grid {
+  flex-grow: 1;
+  background: #eee;
+}
+
+.use-cases {
+  background-color: #63a0cb;
+  color: white;
+}
