@@ -6,6 +6,7 @@ function UseCases({ useCases, selectUseCase }) {
           key={u.name}
           className="btn badge bg-dark bg-gradient m-1 text-light"
           onClick={(e) => selectUseCase(e, i)}
+          type="button"
         >
           {u.name}
         </button>
