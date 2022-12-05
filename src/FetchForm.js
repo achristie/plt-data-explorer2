@@ -13,7 +13,7 @@ function FetchForm({
   setError,
   queryParams,
   loading,
-  generateCurl
+  generateCurl,
 }) {
   const baseUrl = "https://api.platts.com";
   const [urlParams, setUrlParams] = useState({ ...queryParams });
@@ -52,7 +52,7 @@ function FetchForm({
     upd[key] = obj;
     setUrlParams((qp) => ({
       ...qp,
-      ...upd
+      ...upd,
     }));
   }
 
@@ -71,13 +71,14 @@ function FetchForm({
   }
 
   return (
-    <div className="card border border-0 bg-light mb-3 p-4">
-      <div className="row mb-3">
-        <div className="col">
-          <UseCases useCases={useCases} selectUseCase={selectUseCase} />
+    <form onSubmit={(e) => handleFetch(e, urlToFetch)}>
+      <div className="card border border-0 bg-light mb-3 p-4">
+        <div className="row mb-3">
+          <div className="col">
+            <UseCases useCases={useCases} selectUseCase={selectUseCase} />
+          </div>
         </div>
-      </div>
-      <form onSubmit={(e) => handleFetch(e, urlToFetch)}>
+
         <div className="row mb-2">
           <div className="col-sm-6">
             <input
@@ -155,13 +156,14 @@ function FetchForm({
             </div>
           </div>
         </div>
-      </form>
-      {errors && (
-        <div className="flex-row mt-3 alert alert-danger mb-0" role="alert">
-          {errors}
-        </div>
-      )}
-    </div>
+
+        {errors && (
+          <div className="flex-row mt-3 alert alert-danger mb-0" role="alert">
+            {errors}
+          </div>
+        )}
+      </div>
+    </form>
   );
 }
 
