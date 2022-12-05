@@ -117,7 +117,7 @@ function FetchForm({
           className="flex-row align-items-center mt-2 d-flex"
           style={{ gap: "40px" }}
         >
-          <div className="text-truncate flex-fill">{urlToFetch}</div>
+          <div className="text-truncate flex-fill">{decodeURIComponent(urlToFetch)}</div>
           <div className="justify-content-end">
             <div className="btn-group">
               <button
